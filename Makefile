@@ -8,6 +8,9 @@
 SRC_DIR		=	src
 SRC			=	help.c							\
 				panoramix.c						\
+				init_core.c						\
+				villager.c						\
+				druid.c							\
 
 SRC			:=	$(addprefix $(SRC_DIR)/, $(SRC))
 
