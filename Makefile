@@ -31,6 +31,8 @@ all:	$(NAME)
 $(NAME):	$(OBJ) $(MAIN_OBJ)
 	$(CC) -o $(NAME) $(OBJ) $(MAIN_OBJ) $(CFLAGS)
 
+tests_run:
+
 clean:
 	rm -f $(MAIN_OBJ)
 	rm -f $(OBJ)
