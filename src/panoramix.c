@@ -13,8 +13,9 @@ int panoramix(char *nb_villagers, char *pot_size, char *nb_fights,
 {
     core_t core = {0};
 
-    if (init_core(&core, (args_t){.nb_fights=nb_fights, .nb_refills=nb_refills,
-    .nb_villagers=nb_villagers, .pot_size=pot_size}) == 84)
+    if (init_core(&core, (args_t){.nb_fights = nb_fights,
+    .nb_refills = nb_refills, .nb_villagers = nb_villagers,
+    .pot_size = pot_size}) == 84)
         return (84);
     for (int i = 0; i < atoi(nb_villagers); i++)
         pthread_create(&core.villagers[i].thread, NULL, villager,
