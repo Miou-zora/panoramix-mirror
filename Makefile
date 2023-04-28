@@ -5,9 +5,15 @@
 ## Makefile
 ##
 
-SRC			=
+SRC_DIR		=	src
+SRC			=	help.c							\
+				panoramix.c						\
+
+SRC			:=	$(addprefix $(SRC_DIR)/, $(SRC))
 
 MAIN		=	main.c
+
+MAIN_OBJ	=	$(MAIN:%.c=%.o)
 
 OBJ			=	$(SRC:%.c=%.o)
 
@@ -19,10 +25,11 @@ CC			=	gcc
 
 all:	$(NAME)
 
-$(NAME):	$(OBJ)
-	$(CC) -o $(NAME) $(OBJ) $(MAIN) $(CFLAGS)
+$(NAME):	$(OBJ) $(MAIN_OBJ)
+	$(CC) -o $(NAME) $(OBJ) $(MAIN_OBJ) $(CFLAGS)
 
 clean:
+	rm -f $(MAIN_OBJ)
 	rm -f $(OBJ)
 
 fclean:	clean
