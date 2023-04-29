@@ -8,6 +8,14 @@
 #include "core.h"
 #include <stdlib.h>
 
+void destroy_all(core_t *core)
+{
+    pthread_mutex_destroy(&core->pot.mutex);
+    pthread_mutex_destroy(&core->druid.mutex);
+    pthread_cond_destroy(&core->druid.cond);
+    free(core->villagers);
+}
+
 int panoramix(char *nb_villagers, char *pot_size, char *nb_fights,
     char *nb_refills)
 {
@@ -24,5 +32,6 @@ int panoramix(char *nb_villagers, char *pot_size, char *nb_fights,
     for (int i = 0; i < atoi(nb_villagers); i++)
         pthread_join(core.villagers[i].thread, NULL);
     pthread_join(core.druid.thread, NULL);
+    destroy_all(&core);
     return (0);
 }

@@ -36,6 +36,7 @@ int init_core(core_t *core, args_t args)
     pthread_mutex_init(&core->pot.mutex, NULL);
     core->druid.ingredients = atoi(args.nb_refills);
     core->druid.thread = 0;
+    pthread_mutex_init(&core->druid.mutex, NULL);
     pthread_cond_init(&core->druid.cond, NULL);
     init_villagers(core->villagers, &args, core);
     return (0);

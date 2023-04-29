@@ -22,6 +22,7 @@ typedef struct {
     int ingredients;
     pot_t *pot;
     pthread_cond_t cond;
+    pthread_mutex_t mutex;
 } druid_t;
 
 typedef struct {

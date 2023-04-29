@@ -23,6 +23,7 @@ void *druid(void *args)
             " Beware I can only make %i"
             " more refills after this one.\n", druid->ingredients);
         }
+        pthread_mutex_unlock(&druid->pot->mutex);
     } while (druid->ingredients > 0);
     pthread_mutex_unlock(&druid->pot->mutex);
     printf("Druid: I'm out of viscum. I'm going back to... zZz\n");
