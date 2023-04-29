@@ -9,15 +9,11 @@
 
 #include <pthread.h>
 #include <semaphore.h>
-
-typedef struct {
-    pthread_t thread;
-    int id;
-    int fights_left;
-} villager_t;
+#include <stdbool.h>
 
 typedef struct {
     int pot_left;
+    int pot_size;
     pthread_mutex_t mutex;
 } pot_t;
 
@@ -25,7 +21,18 @@ typedef struct {
     pthread_t thread;
     int ingredients;
     pot_t *pot;
+    pthread_cond_t cond;
 } druid_t;
+
+typedef struct {
+    pthread_t thread;
+    int id;
+    int fights_left;
+    pot_t *pot;
+    bool have_drink;
+    druid_t *druid;
+} villager_t;
+
 
 typedef struct {
     villager_t *villagers;

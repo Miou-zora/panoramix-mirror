@@ -9,6 +9,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+void init_villagers(villager_t *villagers, args_t *args, core_t *core)
+{
+    for (int i = 0; i < atoi(args->nb_villagers); i++) {
+        villagers[i].id = i;
+        villagers[i].fights_left = atoi(args->nb_fights);
+        villagers[i].pot = &core->pot;
+        villagers[i].have_drink = false;
+        villagers[i].druid = &core->druid;
+    }
+}
+
 int init_core(core_t *core, args_t args)
 {
     if (atoi(args.nb_villagers) <= 0 || atoi(args.pot_size) <= 0 ||
@@ -19,14 +30,13 @@ int init_core(core_t *core, args_t args)
     core->villagers = calloc(sizeof(villager_t), atoi(args.nb_villagers));
     if (!core->villagers)
         return (84);
-    for (int i = 0; i < atoi(args.nb_villagers); i++) {
-        core->villagers[i].id = i;
-        core->villagers[i].fights_left = atoi(args.nb_fights);
-    }
     core->pot.pot_left = atoi(args.pot_size);
+    core->pot.pot_size = atoi(args.pot_size);
     core->druid.pot = &core->pot;
     pthread_mutex_init(&core->pot.mutex, NULL);
-    core->druid.ingredients = atoi(args.pot_size);
+    core->druid.ingredients = atoi(args.nb_refills);
     core->druid.thread = 0;
+    pthread_cond_init(&core->druid.cond, NULL);
+    init_villagers(core->villagers, &args, core);
     return (0);
 }
