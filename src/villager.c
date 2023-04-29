@@ -32,7 +32,6 @@ void *villager(void *args)
     printf("Villager %i: Going into battle! %i\n", villager->id,
         villager->fights_left);
     while (villager->fights_left > 0) {
-        usleep(100000);
         if (villager->have_drink == true) {
             villager->fights_left -= 1;
             villager->have_drink = false;
