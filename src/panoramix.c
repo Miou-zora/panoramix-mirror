@@ -11,7 +11,8 @@
 void destroy_all(core_t *core)
 {
     pthread_mutex_destroy(&core->pot.mutex);
-    pthread_cond_destroy(&core->druid.cond);
+    sem_destroy(&core->druid.sem_empty);
+    sem_destroy(&core->druid.sem_full);
     free(core->villagers);
 }
 

@@ -21,7 +21,8 @@ typedef struct {
     pthread_t thread;
     int ingredients;
     pot_t *pot;
-    pthread_cond_t cond;
+    sem_t sem_full;
+    sem_t sem_empty;
 } druid_t;
 
 typedef struct {

@@ -12,10 +12,8 @@ void *druid(void *args)
 {
     druid_t *druid = (druid_t *)args;
     printf("Druid: I'm ready... but sleepy...\n");
-    pthread_mutex_lock(&druid->pot->mutex);
     do {
-        pthread_cond_wait(&druid->cond,
-            &druid->pot->mutex);
+        sem_wait(&druid->sem_empty);
         if (druid->ingredients > 0) {
             druid->pot->pot_left = druid->pot->pot_size;
             druid->ingredients -= 1;
@@ -23,9 +21,8 @@ void *druid(void *args)
             " Beware I can only make %i"
             " more refills after this one.\n", druid->ingredients);
         }
-        pthread_mutex_unlock(&druid->pot->mutex);
+        sem_post(&druid->sem_full);
     } while (druid->ingredients > 0);
-    pthread_mutex_unlock(&druid->pot->mutex);
     printf("Druid: I'm out of viscum. I'm going back to... zZz\n");
     return (NULL);
 }

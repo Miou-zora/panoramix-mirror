@@ -21,7 +21,12 @@ void update_pot_druid(villager_t *villager)
     } else {
         printf("Villager %i: Hey Pano wake up! "
         "We need more potion.\n", villager->id);
-        pthread_cond_signal(&villager->druid->cond);
+        sem_post(&villager->druid->sem_empty);
+        sem_wait(&villager->druid->sem_full);
+        villager->pot->pot_left -= 1;
+        villager->fights_left -= 1;
+        printf("Villager %i: Take that roman scum! Only %i left.\n",
+            villager->id, villager->fights_left);
         pthread_mutex_unlock(&villager->pot->mutex);
     }
 }
@@ -29,8 +34,7 @@ void update_pot_druid(villager_t *villager)
 void *villager(void *args)
 {
     villager_t *villager = (villager_t *)args;
-    printf("Villager %i: Going into battle! %i\n", villager->id,
-        villager->fights_left);
+    printf("Villager %i: Going into battle!\n", villager->id);
     while (villager->fights_left > 0) {
         if (villager->have_drink == true) {
             villager->fights_left -= 1;
