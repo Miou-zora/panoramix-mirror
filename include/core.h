@@ -23,6 +23,8 @@ typedef struct {
     pot_t *pot;
     sem_t sem_full;
     sem_t sem_empty;
+    int nb_villagers;
+    pthread_mutex_t mutex_nb_villagers;
 } druid_t;
 
 typedef struct {

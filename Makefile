@@ -31,6 +31,9 @@ all:	$(NAME)
 $(NAME):	$(OBJ) $(MAIN_OBJ)
 	$(CC) -o $(NAME) $(OBJ) $(MAIN_OBJ) $(CFLAGS)
 
+debug: CFLAGS += -g
+debug: re
+
 tests_run:
 
 clean:

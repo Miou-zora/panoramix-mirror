@@ -14,7 +14,9 @@ void *druid(void *args)
     printf("Druid: I'm ready... but sleepy...\n");
     do {
         sem_wait(&druid->sem_empty);
-        if (druid->ingredients > 0) {
+        if (druid->nb_villagers == 0)
+            return (NULL);
+        if (druid->ingredients > 0 && druid->pot->pot_left == 0) {
             druid->pot->pot_left = druid->pot->pot_size;
             druid->ingredients -= 1;
             printf("Druid: Ah! Yes, yes, I'm awake! Working on it!"

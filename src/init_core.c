@@ -36,8 +36,10 @@ int init_core(core_t *core, args_t args)
     pthread_mutex_init(&core->pot.mutex, NULL);
     core->druid.ingredients = atoi(args.nb_refills);
     core->druid.thread = 0;
-    sem_init(&core->druid.sem_empty, 1, 0);
-    sem_init(&core->druid.sem_full, 1, 0);
+    core->druid.nb_villagers = atoi(args.nb_villagers);
+    pthread_mutex_init(&core->druid.mutex_nb_villagers, NULL);
+    sem_init(&core->druid.sem_empty, 10, 0);
+    sem_init(&core->druid.sem_full, 10, 0);
     init_villagers(core->villagers, &args, core);
     return (0);
 }
